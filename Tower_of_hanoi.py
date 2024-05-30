@@ -46,3 +46,27 @@ def move(n, source, auxiliary, target):
            
 # initiate call from source A to target C with auxiliary B
 move(NUMBER_OF_DISKS, 'A', 'B', 'C')
+
+
+Jumlah_disk = 5
+A = list(range(Jumlah_disk, 0, -1))
+B = []
+C = []
+
+def move2(n, source, auxiliary, target):
+    if n <= 0:
+        return
+        # move2 n - 1 disks from source to auxiliary, so they are out of the way
+    move2(n - 1, source, target, auxiliary)
+        
+        # move2 the nth disk from source to target
+    target.append(source.pop())
+        
+        # display our progress
+    print(A, B, C, '\n')
+        
+        # move2 the n - 1 disks that we left on auxiliary onto target
+    move2(n - 1,  auxiliary, source, target)
+              
+# initiate call from source A to target C with auxiliary B
+move2(Jumlah_disk, A, B, C)
