@@ -47,8 +47,8 @@ def move(n, source, auxiliary, target):
 # initiate call from source A to target C with auxiliary B
 move(NUMBER_OF_DISKS, 'A', 'B', 'C')
 
-
-Jumlah_disk = 5
+#ini menggunakan recursive, pelajari lebih lanjut
+Jumlah_disk = 3
 A = list(range(Jumlah_disk, 0, -1))
 B = []
 C = []
