@@ -1,0 +1,63 @@
+import copy
+import random
+
+class Hat:
+    def __init__(self, **balls):
+        if not balls or all(count <= 0 for count in balls.values()):
+            raise ValueError("At least one ball with a count greater than zero must be specified.")
+        self.initial_contents = [color for color, count in balls.items() for _ in range(count)]
+        self.contents = self.initial_contents.copy()
+
+    def draw(self, num_balls_drawn):
+        if not self.contents:
+            self.reset()
+        if num_balls_drawn >= len(self.contents):
+            drawn_balls = self.contents.copy()  # Return all remaining balls if more or equal are requested
+            self.contents.clear()  # Empty the hat
+        else:
+            drawn_balls = random.sample(self.contents, num_balls_drawn)
+            for ball in drawn_balls:
+                self.contents.remove(ball)
+        return drawn_balls
+
+    def reset(self):
+        self.contents = self.initial_contents.copy()
+
+def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
+    M = 0
+    expected_draw = [color for color, count in expected_balls.items() for _ in range(count)]
+    for _ in range(num_experiments):
+        hat.reset()  # Ensure the hat is reset before each experiment
+        drawn_balls = hat.draw(num_balls_drawn)
+        drawn_counts = {ball: drawn_balls.count(ball) for ball in set(drawn_balls)}
+        if all(drawn_counts.get(ball, 0) >= count for ball, count in expected_balls.items()):
+            M += 1
+    return M / num_experiments
+    '''
+    for _ in range(num_experiments):
+        hat.reset()
+        if sorted(hat.draw(num_balls_drawn)) == sorted(expected_draw):
+            M += 1
+    return M / num_experiments
+        '''
+
+
+
+
+# Example usage
+hat1 = Hat(red=0, blue=1)
+red_hat = {"red":4,"blue": 3, "yellow": 0, "green": 2}
+hat2 = Hat(red = 2, blue = 3, yellow = 0, green = 2)
+contents = [key for key, count in red_hat.items() for _ in range(count)]
+print(contents)
+def draw(hat , num_balls_drawn):
+    
+    hat_contents = hat.copy()
+    if num_balls_drawn > len(hat_contents):
+        hat_contents = hat.copy()
+    else:
+        drawn_balls = random.choices(hat_contents, k = num_balls_drawn)
+        return drawn_balls
+print(draw(contents , 3))
+print(draw(contents , 3))
+print(experiment(hat = hat2 , expected_balls={'red':2,'green':1}, num_balls_drawn=3, num_experiments= 1500))
